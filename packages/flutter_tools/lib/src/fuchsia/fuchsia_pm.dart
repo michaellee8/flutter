@@ -111,7 +111,7 @@ class FuchsiaPM {
       throwToolExit('Fuchsia pm tool not found');
     }
     if (isIPv6Address(host.split('%').first)) {
-      host = '[${host.replaceAll('%', '%25')}]';
+      host = '[$host]';
     }
     final List<String> command = <String>[
       globals.fuchsiaArtifacts.pm.path,
@@ -181,12 +181,6 @@ class FuchsiaPM {
 /// }
 class FuchsiaPackageServer {
   factory FuchsiaPackageServer(String repo, String name, String host, int port) {
-    // TODO(jonahwilliams): ensure we only receive valid ipv4 or ipv6 InternetAddresses.
-    // Temporary work around to receiving ipv6 addresses with trailing information:
-    // fe80::ec4:7aff:fecc:ea8f%eno2
-    if (host.contains('%')) {
-      host = host.split('%').first;
-    }
     return FuchsiaPackageServer._(repo, name, host, port);
   }
 
